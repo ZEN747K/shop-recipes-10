@@ -56,9 +56,10 @@ class Memberorder extends Controller
                 }
                 $flag_order = '<button class="btn btn-sm btn-success">สั่งหน้าร้าน</button>';
                 $action = '<button data-id="' . $rs->table_id . '" type="button" class="btn btn-sm btn-outline-primary modalShow m-1">รายละเอียด</button>';
+                $table = Table::find($rs->table_id);
                 $info[] = [
                     'flag_order' => $flag_order,
-                    'table_id' => $rs->table_id,
+                    'table_id' => $table->table_number,
                     'remark' => $rs->remark,
                     'status' => $status,
                     'created' => $this->DateThai($rs->created_at),
