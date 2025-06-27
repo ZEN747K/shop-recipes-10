@@ -174,6 +174,8 @@
 </body>
 
 </html>
+@if(request()->query('preview') != '1')
 <script>
     window.print();
 </script>
+@endif

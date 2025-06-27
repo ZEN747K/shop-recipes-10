@@ -184,6 +184,7 @@
                     <input type="hidden" id="pay_id">
                 </div>
                 <div class="modal-footer">
+                    <button type="button" class="btn btn-info" id="preview-tax-full">พรีวิว</button>
                     <button type="submit" class="btn btn-primary" id="open-tex-full">ออกใบเสร็จ</button>
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ปิด</button>
                 </div>
@@ -201,6 +202,23 @@
             <div class="modal-body" id="body-html-recipes">
             </div>
             <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ปิด</button>
+            </div>
+            </div>
+</div>
+</div>
+<div class="modal fade" tabindex="-1" aria-labelledby="previewLabel" aria-hidden="true" id="modal-preview">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">พรีวิวใบเสร็จ</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <iframe src="" id="preview-frame" style="width:100%;height:500px;border:0;"></iframe>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="confirm-print">ปริ้นใบเสร็จ</button>
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ปิด</button>
             </div>
         </div>
@@ -617,6 +635,37 @@
                 $('#body-html-recipes').html(response);
             }
         });
+    });
+    $(document).on('click', '.preview-short', function(e) {
+        var id = $(this).data('id');
+        $('#preview-frame').attr('src', '<?= url('admin/order/printReceipt') ?>/' + id + '?preview=1');
+        $('#confirm-print').data('url', '<?= url('admin/order/printReceipt') ?>/' + id);
+        $('#modal-preview').modal('show');
+    });
+
+    $(document).on('click', '#preview-tax-full', function(e) {
+        e.preventDefault();
+        var pay_id = $('#pay_id').val();
+        var name = $('#name').val();
+        var tel = $('#tel').val();
+        var tax_id = $('#tax_id').val();
+        var address = $('#address').val();
+        var urlPreview = '<?= url('admin/order/printReceiptfull') ?>/' + pay_id + '?name=' + name + '&tel=' + tel + '&tax_id=' + tax_id + '&address=' + address + '&preview=1';
+        $('#modal-tax-full').modal('hide');
+        $('#preview-frame').attr('src', urlPreview);
+        $('#confirm-print').data('url', '<?= url('admin/order/printReceiptfull') ?>/' + pay_id + '?name=' + name + '&tel=' + tel + '&tax_id=' + tax_id + '&address=' + address);
+        $('#modal-preview').modal('show');
+    });
+
+    $('#confirm-print').click(function() {
+        var url = $(this).data('url');
+        window.open(url, '_blank');
+        $('#modal-preview').modal('hide');
+    });
+
+    $('#modal-preview').on('hidden.bs.modal', function() {
+        $('#preview-frame').attr('src', '');
+        $('#confirm-print').data('url', '');
     });
 </script>
 @endsection

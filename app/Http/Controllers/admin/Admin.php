@@ -342,7 +342,7 @@ class Admin extends Controller
         if (count($pay) > 0) {
             $info = [];
             foreach ($pay as $rs) {
-                $action = '<a href="' . route('printReceipt', $rs->id) . '" target="_blank" type="button" class="btn btn-sm btn-outline-primary m-1">ออกใบเสร็จฉบับย่อ</a>
+                $action = '<button data-id="' . $rs->id . '" type="button" class="btn btn-sm btn-outline-primary preview-short m-1">พรีวิวใบเสร็จ</button>
                 <button data-id="' . $rs->id . '" type="button" class="btn btn-sm btn-outline-primary modalTax m-1">ออกใบกำกับภาษี</button>
                 <button data-id="' . $rs->id . '" type="button" class="btn btn-sm btn-outline-primary modalShowPay m-1">รายละเอียด</button>';
                 $table = Table::find($rs->table_id);
@@ -375,7 +375,7 @@ class Admin extends Controller
         if (count($pay) > 0) {
             $info = [];
             foreach ($pay as $rs) {
-                $action = '<a href="' . route('printReceipt', $rs->id) . '" target="_blank" type="button" class="btn btn-sm btn-outline-primary m-1">ออกใบเสร็จฉบับย่อ</a>
+                $action = '<button data-id="' . $rs->id . '" type="button" class="btn btn-sm btn-outline-success preview-short m-1">พรีวิวใบเสร็จ</button>
                 <button data-id="' . $rs->id . '" type="button" class="btn btn-sm btn-outline-primary modalTax m-1">ออกใบกำกับภาษี</button>
                 <button data-id="' . $rs->id . '" type="button" class="btn btn-sm btn-outline-primary modalShowPay m-1">รายละเอียด</button>';
                 $info[] = [
