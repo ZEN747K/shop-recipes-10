@@ -219,6 +219,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary" id="confirm-print">ปริ้นใบเสร็จ</button>
+                <button type="button" class="btn btn-info" id="print_web">print_web</button>
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ปิด</button>
             </div>
         </div>
@@ -636,12 +637,13 @@
             }
         });
     });
-    $(document).on('click', '.preview-short', function(e) {
-        var id = $(this).data('id');
-        $('#preview-frame').attr('src', '<?= url('admin/order/printReceipt') ?>/' + id + '?preview=1');
-        $('#confirm-print').data('url', '<?= url('admin/order/printReceipt') ?>/' + id);
-        $('#modal-preview').modal('show');
-    });
+   $(document).on('click', '.preview-short', function(e) {
+       var id = $(this).data('id');
+       $('#preview-frame').attr('src', '<?= url('admin/order/printReceipt') ?>/' + id + '?preview=1');
+       $('#confirm-print').data('url', '<?= url('admin/order/printReceipt') ?>/' + id);
+        $('#print_web').data('url', '<?= url('admin/order/receiptWeb') ?>/' + id);
+       $('#modal-preview').modal('show');
+   });
 
     $(document).on('click', '#preview-tax-full', function(e) {
         e.preventDefault();
@@ -651,21 +653,28 @@
         var tax_id = $('#tax_id').val();
         var address = $('#address').val();
         var urlPreview = '<?= url('admin/order/printReceiptfull') ?>/' + pay_id + '?name=' + name + '&tel=' + tel + '&tax_id=' + tax_id + '&address=' + address + '&preview=1';
-        $('#modal-tax-full').modal('hide');
-        $('#preview-frame').attr('src', urlPreview);
-        $('#confirm-print').data('url', '<?= url('admin/order/printReceiptfull') ?>/' + pay_id + '?name=' + name + '&tel=' + tel + '&tax_id=' + tax_id + '&address=' + address);
-        $('#modal-preview').modal('show');
-    });
+       $('#modal-tax-full').modal('hide');
+       $('#preview-frame').attr('src', urlPreview);
+       $('#confirm-print').data('url', '<?= url('admin/order/printReceiptfull') ?>/' + pay_id + '?name=' + name + '&tel=' + tel + '&tax_id=' + tax_id + '&address=' + address);
+        $('#print_web').data('url', '<?= url('admin/order/receiptWeb') ?>/' + pay_id);
+       $('#modal-preview').modal('show');
+   });
 
-    $('#confirm-print').click(function() {
+   $('#confirm-print').click(function() {
+       var url = $(this).data('url');
+       window.open(url, '_blank');
+       $('#modal-preview').modal('hide');
+   });
+
+    $('#print_web').click(function() {
         var url = $(this).data('url');
         window.open(url, '_blank');
-        $('#modal-preview').modal('hide');
     });
 
-    $('#modal-preview').on('hidden.bs.modal', function() {
-        $('#preview-frame').attr('src', '');
-        $('#confirm-print').data('url', '');
-    });
+   $('#modal-preview').on('hidden.bs.modal', function() {
+       $('#preview-frame').attr('src', '');
+       $('#confirm-print').data('url', '');
+        $('#print_web').data('url', '');
+   });
 </script>
 @endsection

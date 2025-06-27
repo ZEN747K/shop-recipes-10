@@ -480,6 +480,21 @@ class Admin extends Controller
         return view('taxfull', compact('config', 'pay', 'order', 'get'));
     }
 
+    public function printReceiptWeb($id)
+    {
+        $config = Config::first();
+        $pay = Pay::find($id);
+        $paygroup = PayGroup::where('pay_id', $id)->get();
+        $order_id = [];
+        foreach ($paygroup as $rs) {
+            $order_id[] = $rs->order_id;
+        }
+        $order = OrdersDetails::whereIn('order_id', $order_id)
+            ->with('menu', 'option.option')
+            ->get();
+        return view('receipt_web', compact('config', 'pay', 'order'));
+    }
+
     public function order_rider()
     {
         $data['function_key'] = 'order_rider';
