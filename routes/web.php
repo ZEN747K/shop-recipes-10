@@ -94,6 +94,7 @@ Route::middleware(['role:admin'])->group(function () {
     Route::post('/admin/order/confirm_rider', [Admin::class, 'confirm_rider'])->name('confirm_rider');
     Route::get('/admin/order/printReceipt/{id}', [Admin::class, 'printReceipt'])->name('printReceipt');
     Route::get('/admin/order/printReceiptfull/{id}', [Admin::class, 'printReceiptfull'])->name('printReceiptfull');
+    Route::get('/admin/order/printReceiptWeb/{id}', [Admin::class, 'printReceiptWeb'])->name('printReceiptWeb');
     Route::get('/admin/order_rider', [Admin::class, 'order_rider'])->name('order_rider');
     Route::post('/admin/order/ListOrderRider', [Admin::class, 'ListOrderRider'])->name('ListOrderRider');
     //Cancel
