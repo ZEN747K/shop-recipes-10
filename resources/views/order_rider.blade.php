@@ -220,6 +220,7 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary" id="confirm-print">ปริ้นใบเสร็จ</button>
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ปิด</button>
+                <button type="button" class="btn btn-warning" id="print-browser">ปริ้นแบบธรรมดา</button>
             </div>
         </div>
     </div>
@@ -490,6 +491,7 @@
         $('#modal-tax-full').modal('hide');
         $('#preview-frame').attr('src', urlPreview);
         $('#confirm-print').data('url', '<?= url('admin/order/printReceiptfull') ?>/' + pay_id + '?name=' + name + '&tel=' + tel + '&tax_id=' + tax_id + '&address=' + address);
+        $('#print_web').data('url', '<?= url('admin/order/printWeb') ?>/' + pay_id);
         $('#modal-preview').modal('show');
     });
 
@@ -499,9 +501,15 @@
         $('#modal-preview').modal('hide');
     });
 
+    $('#print_web').click(function() {
+        var url = $(this).data('url');
+        $('#preview-frame').attr('src', url);
+    });
+
     $('#modal-preview').on('hidden.bs.modal', function() {
         $('#preview-frame').attr('src', '');
         $('#confirm-print').data('url', '');
+        $('#print_web').data('url', '');
     });
 
     $(document).on('click', '.cancelOrderSwal', function(e) {
@@ -590,6 +598,16 @@
                 $('#body-html-recipes').html(response);
             }
         });
+    });
+</script>
+<script>
+    // ปุ่มปริ้นแบบธรรมดา (browser print)
+    $('#print-browser').click(function() {
+        var iframe = document.getElementById('preview-frame');
+        if (iframe && iframe.contentWindow) {
+            iframe.contentWindow.focus();
+            iframe.contentWindow.print();
+        }
     });
 </script>
 @endsection

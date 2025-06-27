@@ -218,8 +218,10 @@
                 <iframe src="" id="preview-frame" style="width:100%;height:500px;border:0;"></iframe>
             </div>
             <div class="modal-footer">
+                <button type="button" class="btn btn-info" id="print_web">แสดงหน้าเว็บ</button>
                 <button type="button" class="btn btn-primary" id="confirm-print">ปริ้นใบเสร็จ</button>
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ปิด</button>
+                <button type="button" class="btn btn-warning" id="print-browser">ปริ้นแบบธรรมดา</button>
             </div>
         </div>
     </div>
@@ -640,6 +642,7 @@
         var id = $(this).data('id');
         $('#preview-frame').attr('src', '<?= url('admin/order/printReceipt') ?>/' + id + '?preview=1');
         $('#confirm-print').data('url', '<?= url('admin/order/printReceipt') ?>/' + id);
+        $('#print_web').data('url', '<?= url('admin/order/printWeb') ?>/' + id);
         $('#modal-preview').modal('show');
     });
 
@@ -654,6 +657,7 @@
         $('#modal-tax-full').modal('hide');
         $('#preview-frame').attr('src', urlPreview);
         $('#confirm-print').data('url', '<?= url('admin/order/printReceiptfull') ?>/' + pay_id + '?name=' + name + '&tel=' + tel + '&tax_id=' + tax_id + '&address=' + address);
+        $('#print_web').data('url', '<?= url('admin/order/printWeb') ?>/' + pay_id);
         $('#modal-preview').modal('show');
     });
 
@@ -663,9 +667,24 @@
         $('#modal-preview').modal('hide');
     });
 
+    $('#print_web').click(function() {
+        var url = $(this).data('url');
+        $('#preview-frame').attr('src', url);
+    });
+
+    // ปุ่มปริ้นแบบธรรมดา (browser print)
+    $('#print-browser').click(function() {
+        var iframe = document.getElementById('preview-frame');
+        if (iframe && iframe.contentWindow) {
+            iframe.contentWindow.focus();
+            iframe.contentWindow.print();
+        }
+    });
+
     $('#modal-preview').on('hidden.bs.modal', function() {
         $('#preview-frame').attr('src', '');
         $('#confirm-print').data('url', '');
+        $('#print_web').data('url', '');
     });
 </script>
 @endsection

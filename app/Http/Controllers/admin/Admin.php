@@ -270,7 +270,7 @@ class Admin extends Controller
             $total = $request->total;
             $qr = Builder::staticMerchantPresentedQR($config->promptpay)->setAmount($total)->toSvgString();
             echo '<div class="row g-3 mb-3">
-                <div class="col-md-12">
+                <div class="col-md-12>
                     ' . $qr . '
                 </div>
             </div>';
@@ -460,13 +460,19 @@ class Admin extends Controller
         $order = OrdersDetails::whereIn('order_id', $order_id)
             ->with('menu', 'option.option')
             ->get();
-        return view('tax', compact('config', 'pay', 'order'));
+        // ส่ง jsonData ไปที่ print_web สำหรับใบเสร็จธรรมดา
+        $data = [
+            'config' => $config,
+            'pay' => $pay,
+            'order' => $order,
+            'type' => 'normal' // เพิ่ม type เพื่อแยกประเภท
+        ];
+        return view('print_web', ['jsonData' => json_encode($data)]);
     }
 
     public function printReceiptfull($id)
     {
         $get = $_GET;
-
         $config = Config::first();
         $pay = Pay::find($id);
         $paygroup = PayGroup::where('pay_id', $id)->get();
@@ -477,7 +483,21 @@ class Admin extends Controller
         $order = OrdersDetails::whereIn('order_id', $order_id)
             ->with('menu', 'option.option')
             ->get();
-        return view('taxfull', compact('config', 'pay', 'order', 'get'));
+        // ส่ง jsonData ไปที่ print_web สำหรับใบกำกับภาษี
+        $tax_full = [
+            'name' => $get['name'] ?? '',
+            'tel' => $get['tel'] ?? '',
+            'tax_id' => $get['tax_id'] ?? '',
+            'address' => $get['address'] ?? ''
+        ];
+        $data = [
+            'config' => $config,
+            'pay' => $pay,
+            'order' => $order,
+            'tax_full' => $tax_full,
+            'type' => 'taxfull' // เพิ่ม type เพื่อแยกประเภท
+        ];
+        return view('print_web', ['jsonData' => json_encode($data)]);
     }
 
     public function order_rider()
