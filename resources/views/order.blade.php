@@ -218,7 +218,6 @@
                 <iframe src="" id="preview-frame" style="width:100%;height:500px;border:0;"></iframe>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-success" id="print_web">แสดงหน้าเว็บ</button>
                 <button type="button" class="btn btn-primary" id="confirm-print">ปริ้นใบเสร็จ</button>
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ปิด</button>
             </div>
@@ -641,7 +640,6 @@
         var id = $(this).data('id');
         $('#preview-frame').attr('src', '<?= url('admin/order/printReceipt') ?>/' + id + '?preview=1');
         $('#confirm-print').data('url', '<?= url('admin/order/printReceipt') ?>/' + id);
-        $('#print_web').data('url', '<?= url('admin/order/printReceiptWeb') ?>/' + id);
         $('#modal-preview').modal('show');
     });
 
@@ -656,13 +654,7 @@
         $('#modal-tax-full').modal('hide');
         $('#preview-frame').attr('src', urlPreview);
         $('#confirm-print').data('url', '<?= url('admin/order/printReceiptfull') ?>/' + pay_id + '?name=' + name + '&tel=' + tel + '&tax_id=' + tax_id + '&address=' + address);
-        $('#print_web').data('url', '<?= url('admin/order/printReceiptWeb') ?>/' + pay_id + '?name=' + name + '&tel=' + tel + '&tax_id=' + tax_id + '&address=' + address);
         $('#modal-preview').modal('show');
-    });
-
-    $('#print_web').click(function() {
-        var url = $(this).data('url');
-        $('#preview-frame').attr('src', url);
     });
 
     $('#confirm-print').click(function() {
@@ -674,7 +666,6 @@
     $('#modal-preview').on('hidden.bs.modal', function() {
         $('#preview-frame').attr('src', '');
         $('#confirm-print').data('url', '');
-        $('#print_web').data('url', '');
     });
 </script>
 @endsection
