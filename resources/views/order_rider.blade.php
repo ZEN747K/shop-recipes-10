@@ -219,8 +219,8 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary" id="confirm-print">ปริ้นใบเสร็จ</button>
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ปิด</button>
                 <button type="button" class="btn btn-warning" id="print-browser">ปริ้นแบบธรรมดา</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ปิด</button>
             </div>
         </div>
     </div>

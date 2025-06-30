@@ -38,10 +38,21 @@
 <div class="receipt-preview" id="receiptPreview"></div>
 <pre id="statusOutput" style="margin-top: 20px;"></pre>
 <script>
-    // รับ jsonData จาก blade
-    const jsonData = @json($jsonData ?? '{}');
-    let data = {};
-    try { data = typeof jsonData === 'string' ? JSON.parse(jsonData) : jsonData; } catch(e) { data = {}; }
+        // รับ jsonData จาก blade
+        // Embed JSON data in a script tag
+    </script>
+    <script id="jsonData" type="application/json">
+    {!! json_encode($jsonData ?? '{}') !!}
+    </script>
+    <script>
+        let jsonData = {};
+        try {
+          jsonData = JSON.parse(document.getElementById('jsonData').textContent);
+        } catch(e) {
+          jsonData = {};
+        }
+        let data = {};
+        try { data = typeof jsonData === 'string' ? JSON.parse(jsonData) : jsonData; } catch(e) { data = {}; }
 
     // ฟังก์ชันแสดงตัวอย่างใบเสร็จ/ใบกำกับภาษี
     function renderReceiptPreview() {

@@ -218,10 +218,9 @@
                 <iframe src="" id="preview-frame" style="width:100%;height:500px;border:0;"></iframe>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-info" id="print_web">แสดงหน้าเว็บ</button>
                 <button type="button" class="btn btn-primary" id="confirm-print">ปริ้นใบเสร็จ</button>
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ปิด</button>
                 <button type="button" class="btn btn-warning" id="print-browser">ปริ้นแบบธรรมดา</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ปิด</button>
             </div>
         </div>
     </div>
