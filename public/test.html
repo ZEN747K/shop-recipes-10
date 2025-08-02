@@ -15,12 +15,18 @@
             font-size: 16px;
             width: 100%;
         }
+        @media print {
+            .no-print,
+            #statusOutput {
+                display: none;
+            }
+        }
     </style>
 </head>
 <body>
 
-<button onclick="sendCommand('STATUS_PRINTER')">Check Printer Status</button>
-<button onclick="window.printReceipt(jsonData)">Print Receipt</button>
+<button class="no-print" onclick="sendCommand('STATUS_PRINTER')">Check Printer Status</button>
+<button class="no-print" onclick="window.printReceipt(jsonData)">Print Receipt</button>
 
 <pre id="statusOutput" style="margin-top: 20px;"></pre>
 

@@ -30,11 +30,18 @@
           margin: 16px 0;
           font-size: 15px;
         }
+        @media print {
+          .no-print,
+          #statusOutput {
+            display: none;
+          }
+        }
     </style>
 </head>
 <body>
-<button onclick="sendCommand('STATUS_PRINTER')">Check Printer Status</button>
-<button onclick="sendPrintCommand()">Print Receipt</button>
+<button class="no-print" onclick="sendCommand('STATUS_PRINTER')">Check Printer Status</button>
+<button class="no-print" onclick="sendPrintCommand()">Print Receipt</button>
+<div class="receipt-preview" id="receiptPreview"></div>
 <div class="receipt-preview" id="receiptPreview"></div>
 <pre id="statusOutput" style="margin-top: 20px;"></pre>
 <script>
