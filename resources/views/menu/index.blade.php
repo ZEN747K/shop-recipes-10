@@ -17,6 +17,7 @@
                                 <tr>
                                     <th>เมนู</th>
                                     <th class="text-center">หมวดหมู่</th>
+                                    <th class="text-center">แสดงผล</th>
                                     <th class="text-center">ตัวเลือก</th>
                                     <th class="text-center">จัดการ</th>
                                 </tr>
@@ -52,12 +53,17 @@
             columns: [{
                     data: 'name',
                     class: 'text-left',
-                    width: '40%'
+                    width: '30%'
                 },
                 {
                     data: 'category',
                     class: 'text-center',
                     width: '20%',
+                },
+                {
+                    data: 'status',
+                    class: 'text-center',
+                    width: '10%',
                 },
                 {
                     data: 'option',
@@ -103,6 +109,25 @@
                         }
                     }
                 });
+            }
+        });
+    });
+    $(document).on('click', '.form-check-input', function(e) {
+        e.preventDefault();
+        var id = $(this).data('id');
+        var value = $(this).is(':checked');
+        $.ajax({
+            url: "{{route('changeStatusMenu')}}",
+            type: "post",
+            data: {
+                id: id,
+                value: value
+            },
+            headers: {
+                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+            },
+            success: function(response) {
+                $('#myTable').DataTable().ajax.reload(null, false);
             }
         });
     });

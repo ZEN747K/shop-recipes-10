@@ -34,11 +34,17 @@ class Menu extends Controller
             $info = [];
             foreach ($menu as $rs) {
                 $option = '<a href="' . route('menuTypeOption', $rs->id) . '" class="btn btn-sm btn-outline-primary" title="ตัวเลือก"><i class="bx bx-list-check"></i></a>';
-                $action = '<a href="' . route('menuEdit', $rs->id) . '" class="btn btn-sm btn-outline-primary" title="แก้ไข"><i class="bx bx-edit-alt"></i></a>
-                <button type="button" data-id="' . $rs->id . '" class="btn btn-sm btn-outline-danger deleteMenu" title="ลบ"><i class="bx bxs-trash"></i></button>';
+                $checked = '';
+                if ($rs->is_status == 1) {
+                    $checked = 'checked';
+                }
+                $status = '<div class="form-check form-switch d-flex justify-content-center"><input class="form-check-input" type="checkbox" role="switch" data-id="' . $rs->id . '" ' . $checked . '></div>';
+                $action = '<a href="' . route('menuEdit', $rs->id) . '" class="btn btn-sm btn-outline-primary" title="แก้ไข"><i class="bx bx-edit-alt"></i></a>' .
+                    '<button type="button" data-id="' . $rs->id . '" class="btn btn-sm btn-outline-danger deleteMenu" title="ลบ"><i class="bx bxs-trash"></i></button>';
                 $info[] = [
                     'name' => $rs->name,
                     'category' => $rs['category']->name,
+                    'status' => $status,
                     'option' => $option,
                     'action' => $action
                 ];
@@ -136,6 +142,26 @@ class Menu extends Controller
             }
         }
 
+        return response()->json($data);
+    }
+    public function changeStatusMenu(Request $request)
+    {
+        $data = [
+            'status' => false,
+            'message' => 'เปลี่ยนสถานะไม่สำเร็จ',
+        ];
+        $id = $request->input('id');
+        $value = $request->input('value');
+        if ($id) {
+            $update = ModelsMenu::find($id);
+            $update->is_status = ($value == 'true') ? 1 : 0;
+            if ($update->save()) {
+                $data = [
+                    'status' => true,
+                    'message' => 'เปลี่ยนสถานะเรียบร้อยแล้ว',
+                ];
+            }
+        }
         return response()->json($data);
     }
 

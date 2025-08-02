@@ -151,6 +151,7 @@ Route::middleware(['role:admin'])->group(function () {
     Route::get('/admin/menu/edit/{id}', [Menu::class, 'menuEdit'])->name('menuEdit');
     Route::post('/admin/menu/delete', [Menu::class, 'menuDelete'])->name('menuDelete');
     Route::post('/admin/menu/save', [Menu::class, 'menuSave'])->name('menuSave');
+    Route::post('/admin/menu/changeStatus', [Menu::class, 'changeStatusMenu'])->name('changeStatusMenu');
     //เพิ่มตัวเลือก
     Route::get('/admin/menu/menuTypeOption/{id}', [MenuTypeOption::class, 'menuTypeOption'])->name('menuTypeOption');
     Route::post('/admin/menu/menuTypeOption/menuTypeOptionlistData', [MenuTypeOption::class, 'menuTypeOptionlistData'])->name('menuTypeOptionlistData');

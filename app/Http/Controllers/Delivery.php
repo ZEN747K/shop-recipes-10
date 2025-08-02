@@ -43,7 +43,7 @@ class Delivery extends Controller
     public function detail($id)
     {
         $item = [];
-        $menu = Menu::where('categories_id', $id)->with('files')->orderBy('created_at', 'asc')->get();
+        $menu = Menu::where('categories_id', $id)->where('is_status', 1)->with('files')->orderBy('created_at', 'asc')->get();
         foreach ($menu as $key => $rs) {
             $item[$key] = [
                 'id' => $rs->id,
